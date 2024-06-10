@@ -1,3 +1,24 @@
+-- Configuration
+-- {% if target.name == 'dev' %}
+--     {{ config(
+--         materialized='table',
+--         schema='TPCDS_SF10TCL',
+--         database='DBT_DATABASE1'
+--     ) }}
+-- {% elif target.name == 'qa' %}
+--     {{ config(
+--         materialized='table',
+--         schema='TPCDS_SF10TCL',
+--         database='DBT_DATABASE2'
+--     ) }}
+-- {% endif %}
+--  COLOR.1 = peach
+
+-- Setting parameters
+{% set MARKET = 8 %}
+{% set COLOR1 = 'peach' %}
+{% set COLOR2 = 'saddle' %}
+
 with store_sales_cte as (   
 	select ss_sold_date_sk as sold_date, ss_item_sk, ss_quantity, ss_sales_price, 
 	ss_customer_sk, ss_ticket_number, ss_store_sk, ss_net_paid
@@ -52,7 +73,7 @@ ss_sr_s as (
 	join 
 	store_cte
 	on ss_store_sk = s_store_sk
-	where s_market_id=8
+	where s_market_id= {{MARKET}}
 ),
 
 ss_sr_s_i as (
@@ -116,7 +137,7 @@ select c_last_name
       ,s_store_name
       ,sum(netpaid) paid
 from ssales
-where i_color = 'peach'
+where i_color = {{COLOR1}}
 group by c_last_name
         ,c_first_name
         ,s_store_name
@@ -148,7 +169,7 @@ ss_sr_s as (
 	join 
 	store_cte
 	on ss_store_sk = s_store_sk
-	where s_market_id=8
+	where s_market_id= {{MARKET}}
 ),
 
 ss_sr_s_i as (
@@ -212,7 +233,7 @@ select c_last_name
       ,s_store_name
       ,sum(netpaid) paid
 from ssales
-where i_color = 'saddle'
+where i_color = {{COLOR2}}
 group by c_last_name
         ,c_first_name
         ,s_store_name
