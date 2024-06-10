@@ -1,0 +1,42 @@
+
+version: 2
+
+models:
+  - name: my_first_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: my_second_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+
+
+
+sources:
+  - name: snowflake_sample_data
+    description: 'A sample database provided by snowflake'
+    database: snowflake_sample_data
+    schema: TPCDS_SF10TCL
+    tables:
+      - name: store_sales
+        description: 'Details about the sales in the store.'
+      - name: date_dim
+      - name: item
+      - name: customer
+      - name: catalog_sales
+      - name: web_sales
+      - name: store_returns
+      - name: store
+      - name: customer_address
+      - name: promotion
+    
