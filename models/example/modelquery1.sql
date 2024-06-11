@@ -9,7 +9,6 @@ item_cte as (
 	from {{source('snowflake_sample_data', 'item')}}
 ),
 
-
 customer_cte as (
  	select c_customer_sk, c_first_name, c_last_name, c_current_addr_sk,
 	c_birth_country 
